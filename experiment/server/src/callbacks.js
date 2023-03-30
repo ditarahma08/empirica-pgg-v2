@@ -25,12 +25,11 @@ Empirica.onGameStart(({ game }) => {
   });
   round2.addStage({ name: "Play", duration: 300 });
 
-  console.log('start', game)
 });
 
-Empirica.onRoundStart(({ round }) => { console.log('round start', round) });
+Empirica.onRoundStart(({ round }) => { });
 
-Empirica.onStageStart(({ stage }) => { console.log('stage start', stage) });
+Empirica.onStageStart(({ stage }) => { });
 
 Empirica.onStageEnded(({ stage }) => {
   calculateJellyBeansScore(stage);

@@ -14,7 +14,6 @@ export function Instructions() {
     const contribution = pickRandomNum(0, treatment.endowment);
 
     function onNext() {
-        console.log("next", player.stage)
         player.stage.set("submit", true);
     }
 
