@@ -1,6 +1,7 @@
 import React from "react";
 import { Piggy } from "../assets/Assets";
 import { Label } from "./Label";
+import { Timer } from "./Timer";
 
 export const Header = ({
   left,
@@ -28,9 +29,10 @@ export const Header = ({
           </div>
         )}
       </div>
-      <div className="flex items-center justify-center col-start-4 col-end-9">
+      <div className="flex items-center justify-center col-start-5 col-end-9">
         <Label size="2xl" color="sky">
-          <Clock timerMinutes={timerMinutes} timerSeconds={timerSeconds} />
+          {/* <Clock timerMinutes={timerMinutes} timerSeconds={timerSeconds} /> */}
+          <Timer />
         </Label>
       </div>
       <div className="flex items-center justify-end col-start-9 col-end-13">

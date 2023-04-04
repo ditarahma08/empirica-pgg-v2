@@ -1,8 +1,49 @@
 import { ClassicListenersCollector } from "@empirica/core/admin/classic";
 export const Empirica = new ClassicListenersCollector();
 
+export const AnimalList = [
+  "sloth",
+  "gorilla",
+  "duck",
+  "chicken",
+  "dog",
+  "parrot",
+  "moose",
+  "rabbit",
+  "owl",
+  "chick",
+  "snake",
+  "crocodile",
+  "cow",
+  "pinguin",
+  "monkey",
+  "frog",
+  "elephant",
+  "whale",
+  "horse",
+  "walrus",
+  "rhino",
+  "giraffe",
+  "pig",
+  "buffalo",
+  "zebra",
+  "narwhal",
+  "bear",
+  "goat",
+  "hippo",
+  "panda",
+];
+
 Empirica.onGameStart(({ game }) => {
-  
+  game.set("justStarted", true);
+  game.set("gameStartTimestamp", Date.now());
+
+  game.players.forEach((player, i) => {
+    player.set("avatar", AnimalList[i]);
+    player.set("avatarId", i);
+    player.set("cumulativePayoff", game.get("treatment").endowment);
+  });
+
   const round = game.addRound({
     name: "Instructions",
     task: "instructions"
@@ -12,10 +53,16 @@ Empirica.onGameStart(({ game }) => {
   round.addStage({ name: "Second", duration: 300 });
   round.addStage({ name: "Third", duration: 300 });
 
+  // const round1 = game.addRound({
+  //   name: "Round 1 - Jelly Beans",
+  //   task: "jellybeans",
+  // });
+
   const round1 = game.addRound({
-    name: "Round 1 - Jelly Beans",
-    task: "jellybeans",
-  });
+    name: "Round 1 - Contribution",
+    task: "contribution",
+  })
+
   round1.addStage({ name: "Answer", duration: 300 });
   round1.addStage({ name: "Result", duration: 120 });
 
@@ -28,7 +75,6 @@ Empirica.onGameStart(({ game }) => {
 });
 
 Empirica.onRoundStart(({ round }) => { });
-
 Empirica.onStageStart(({ stage }) => { });
 
 Empirica.onStageEnded(({ stage }) => {

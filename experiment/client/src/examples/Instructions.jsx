@@ -1,5 +1,5 @@
 import React from "react";
-import { usePlayer, usePlayers, useStage } from "@empirica/core/player/classic/react";
+import { usePlayer, usePlayers, useStage, useGame } from "@empirica/core/player/classic/react";
 import { InstructionsStepOne } from "../components/InstructionsStepOne";
 import { InstructionsStepThree } from "../components/InstructionsStepThree";
 import { InstructionsStepTwo } from "../components/InstructionsStepTwo";
@@ -9,8 +9,9 @@ export function Instructions() {
     const player = usePlayer();
     const players = usePlayers();
     const stage = useStage();
+    const game = useGame();
 
-    const treatment = { playerCount: players.length, endowment: undefined };
+    const treatment = game.get("treatment");
     const contribution = pickRandomNum(0, treatment.endowment);
 
     function onNext() {
