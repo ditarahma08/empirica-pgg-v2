@@ -9,6 +9,7 @@ import React from "react";
 import { Instructions } from "./examples/Instructions";
 import { Contribution } from "./examples/Contribution";
 import { Outcome } from "./examples/Outcome";
+import { Summary } from "./examples/Summary";
 
 export function Stage() {
   const player = usePlayer();
@@ -35,6 +36,8 @@ export function Stage() {
       return <Contribution />;
     case "minesweeper":
       return <Outcome />;
+    case "summary":
+      return <Summary />;
     default:
       return <div>Unknown task</div>;
   }

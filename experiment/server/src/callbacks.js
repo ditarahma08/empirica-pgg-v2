@@ -53,24 +53,25 @@ Empirica.onGameStart(({ game }) => {
   round.addStage({ name: "Second", duration: 300 });
   round.addStage({ name: "Third", duration: 300 });
 
-  // const round1 = game.addRound({
-  //   name: "Round 1 - Jelly Beans",
-  //   task: "jellybeans",
-  // });
-
   const round1 = game.addRound({
     name: "Round 1 - Contribution",
     task: "contribution",
   })
 
   round1.addStage({ name: "Answer", duration: 1000 });
-  // round1.addStage({ name: "Result", duration: 120 });
+  round1.addStage({ name: "Result", duration: 120 });
 
   const round2 = game.addRound({
-    name: "Round 2 - Minesweeper",
-    task: "minesweeper",
+    name: "Round 2 - Outcome",
+    task: "outcome",
   });
   round2.addStage({ name: "Play", duration: 300 });
+
+  const round3 = game.addRound({
+    name: "Summary",
+    task: "summary",
+  });
+  round3.addStage({ name: "Summary", duration: 1000 });
 
 });
 
