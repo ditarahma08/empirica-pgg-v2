@@ -95,3 +95,19 @@ treatments:
         showNRounds: true
         showOtherSummaries: true
         summaryDuration: 45
+    - name: example two players
+      factors:
+        basePay: 3
+        contributionDuration: 45
+        conversionRate: 300
+        endowment: 20
+        multiplier: 1
+        numRounds: 1
+        outcomeDuration: 45
+        playerCount: 2
+        punishmentCost: 2
+        punishmentExists: true
+        punishmentMagnitude: 6
+        showNRounds: true
+        showOtherSummaries: true
+        summaryDuration: 45

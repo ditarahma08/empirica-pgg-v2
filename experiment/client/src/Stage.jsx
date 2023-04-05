@@ -8,7 +8,7 @@ import { Loading } from "@empirica/core/player/react";
 import React from "react";
 import { Instructions } from "./examples/Instructions";
 import { Contribution } from "./examples/Contribution";
-import { MineSweeper } from "./examples/MineSweeper";
+import { Outcome } from "./examples/Outcome";
 
 export function Stage() {
   const player = usePlayer();
@@ -34,7 +34,7 @@ export function Stage() {
     case "contribution":
       return <Contribution />;
     case "minesweeper":
-      return <MineSweeper />;
+      return <Outcome />;
     default:
       return <div>Unknown task</div>;
   }

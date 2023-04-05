@@ -63,8 +63,8 @@ Empirica.onGameStart(({ game }) => {
     task: "contribution",
   })
 
-  round1.addStage({ name: "Answer", duration: 300 });
-  round1.addStage({ name: "Result", duration: 120 });
+  round1.addStage({ name: "Answer", duration: 1000 });
+  // round1.addStage({ name: "Result", duration: 120 });
 
   const round2 = game.addRound({
     name: "Round 2 - Minesweeper",
@@ -74,7 +74,25 @@ Empirica.onGameStart(({ game }) => {
 
 });
 
-Empirica.onRoundStart(({ round }) => { });
+Empirica.onRoundStart(({ round }) => {
+  round.set("roundStartTimestamp", Date.now());
+  round.set("totalContributions", 0);
+  round.set("totalReturns", 0);
+  round.set("payoff", 0);
+
+  const contributionProp = round.currentGame.get("treatment").defaultContribProp;
+
+  console.log('round start', round.currentGame.players, round.currentGame.get("treatment"))
+
+  round.currentGame.players.forEach((player, i) => {
+    player.round.set("punishedBy", {});
+    player.round.set("punished", {});
+    player.round.set("rewardedBy", {});
+    player.round.set("rewarded", {});
+    player.round.set("contribution", parseInt(round.currentGame.get("treatment").endowment * contributionProp));
+  });
+});
+
 Empirica.onStageStart(({ stage }) => { });
 
 Empirica.onStageEnded(({ stage }) => {
