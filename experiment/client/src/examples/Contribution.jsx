@@ -12,7 +12,6 @@ import { Label } from "../components/Label";
 import { PlayerGrid } from "../components/PlayerGrid";
 import { You } from "../components/You";
 import { HeaderWithTimer } from "./Header";
-import moment from "moment";
   
 export function Contribution() {
     const player = usePlayer();
@@ -30,36 +29,22 @@ export function Contribution() {
     const otherPlayers = players.filter((p) => p?.id !== player?.id);
 
     function handleOnClick(amount) {
-        // game.append("log",{
-        //     verb:"contributionChange", 
-        //     playerId:player._id, 
-        //     fromValue:player.round.get("contribution"), 
-        //     toValue:contribution+amount, 
-        //     roundIndex:round.index, 
-        //     stage:stage.name, 
-        //     timestamp:moment(Date.now())});
         player.round.set("contribution", contribution + amount);
     };
 
     function handleOnSubmit(amount) {
-        // game.append("log",{
-        //     verb:"submit", 
-        //     playerId:player._id, 
-        //     roundIndex:round.index, 
-        //     stage:stage.name, 
-        //     timestamp:moment(Date.now())});
         player.stage.set("submit", true);
         ;
     };
 
-    useEffect(() => {
-        if (game.get("justStarted")) {
-            gameSound.play();
-            game.set("justStarted", false);
-        } else {
-            roundSound.play();
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (game.get("justStarted")) {
+    //         gameSound.play();
+    //         game.set("justStarted", false);
+    //     } else {
+    //         roundSound.play();
+    //     }
+    // }, []);
 
     return (
         <div className="h-full grid grid-rows-[min-content_1fr]">

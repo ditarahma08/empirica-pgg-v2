@@ -44,34 +44,35 @@ Empirica.onGameStart(({ game }) => {
     player.set("cumulativePayoff", game.get("treatment").endowment);
   });
 
+  // const round = game.addRound({
+  //   name: "Instructions",
+  //   task: "instructions"
+  // });
+
+  // round.addStage({ name: "First", duration: 300 });
+  // round.addStage({ name: "Second", duration: 300 });
+  // round.addStage({ name: "Third", duration: 300 });
+
   const round = game.addRound({
-    name: "Instructions",
-    task: "instructions"
-  });
-
-  round.addStage({ name: "First", duration: 300 });
-  round.addStage({ name: "Second", duration: 300 });
-  round.addStage({ name: "Third", duration: 300 });
-
-  const round1 = game.addRound({
     name: "Round 1 - Contribution",
     task: "contribution",
   })
 
-  round1.addStage({ name: "Answer", duration: 1000 });
-  round1.addStage({ name: "Result", duration: 120 });
+  round.addStage({ name: "contribution", duration: 300000 });
+  round.addStage({ name: "outcome", duration: 300000 });
+  round.addStage({ name: "summary", duration: 300000 })
 
-  const round2 = game.addRound({
-    name: "Round 2 - Outcome",
-    task: "outcome",
-  });
-  round2.addStage({ name: "Play", duration: 300 });
+  // const round2 = game.addRound({
+  //   name: "Round 2 - Outcome & Deductions",
+  //   task: "outcome",
+  // });
+  // round2.addStage({ name: "outcome", duration: 300000 });
 
-  const round3 = game.addRound({
-    name: "Summary",
-    task: "summary",
-  });
-  round3.addStage({ name: "Summary", duration: 1000 });
+  // const round3 = game.addRound({
+  //   name: "Summary",
+  //   task: "summary",
+  // });
+  // round3.addStage({ name: "summary", duration: 300000 });
 
 });
 
@@ -83,8 +84,6 @@ Empirica.onRoundStart(({ round }) => {
 
   const contributionProp = round.currentGame.get("treatment").defaultContribProp;
 
-  console.log('round start', round.currentGame.players, round.currentGame.get("treatment"))
-
   round.currentGame.players.forEach((player, i) => {
     player.round.set("punishedBy", {});
     player.round.set("punished", {});
@@ -94,41 +93,183 @@ Empirica.onRoundStart(({ round }) => {
   });
 });
 
-Empirica.onStageStart(({ stage }) => { });
-
-Empirica.onStageEnded(({ stage }) => {
-  calculateJellyBeansScore(stage);
+Empirica.onStageStart(({ stage }) => {
+  stage.set("stageStartTimestamp", Date.now());
 });
 
-Empirica.onRoundEnded(({ round }) => {});
+Empirica.onStageEnded(({ stage }) => {
+  stage.set("stageEndTimestamp", Date.now());
 
-Empirica.onGameEnded(({ game }) => {});
-
-// Note: this is not the actual number of beans in the pile, it's a guess...
-const jellyBeansCount = 634;
-
-function calculateJellyBeansScore(stage) {
-  if (
-    stage.get("name") !== "Answer" ||
-    stage.round.get("task") !== "jellybeans"
-  ) {
-    return;
+  if (stage.round.get("task") === "contribution") {
+    computePayoff(stage.currentGame);
+  } else if (stage.round.get("task") === "outcome") {
+    computePunishmentCosts(stage.currentGame);
+    computeRewards(stage.currentGame);
+    computeIndividualPayoff(stage.currentGame);
   }
+});
 
-  for (const player of stage.currentGame.players) {
-    let roundScore = 0;
+Empirica.onRoundEnded(({ round }) => {
+  round.set("roundEndTimestamp", Date.now());
 
-    const playerGuess = player.round.get("guess");
+  round.currentGame.players.forEach((player) => {
+    const prevCumulativePayoff = player.get("cumulativePayoff");
+    const roundPayoff = player.round.get("roundPayoff");
+    const newCumulativePayoff = Math.round(prevCumulativePayoff + roundPayoff);
+    player.set("cumulativePayoff", newCumulativePayoff);
+  });
+});
 
-    if (playerGuess) {
-      const deviation = Math.abs(playerGuess - jellyBeansCount);
-      const score = Math.round((1 - deviation / jellyBeansCount) * 10);
-      roundScore = Math.max(0, score);
+Empirica.onGameEnded(({ game }) => {
+  game.set("gameEndTimestamp", Date.now());
+  computeTotalPayoff(game.currentGame);
+  convertPayoff(game.currentGame);
+});
+
+function computePayoff(game) {
+  const multiplier = game.get("treatment").multiplier;
+  let newTotalContributions = 0;
+
+  game.players.forEach((player) => {
+    const contribution = player.round.get("contribution");
+    newTotalContributions += parseFloat(contribution);
+  });
+
+  game.set("totalContributions", newTotalContributions);
+
+  const multipliedReturns = Math.round(
+    game.get("totalContributions") * multiplier
+  );
+
+
+  game.set("totalReturns", multipliedReturns);
+
+  const totalReturns = game.get("totalReturns");
+  const payoff = Math.round(totalReturns / game.players.length);
+
+  game.set("payoff", payoff);
+};
+
+function computePunishmentCosts(game) {
+  game.players.forEach((player) => {
+    const punished = player.round.get("punished");
+    const punishedKeys = Object.keys(punished);
+    let cost = 0;
+    for (const key of punishedKeys) {
+      if (punished[key] != "0") {
+        amount = punished[key];
+        cost += parseFloat(amount) * game.get("treatment").punishmentCost;
+      } else {
+      }
+    }
+    let punishedBy = {};
+    player.round.set("costs", cost);
+    const otherPlayers = _.reject(game.players, (p) => p._id === player._id);
+    otherPlayers.forEach((otherPlayer) => {
+      const otherPlayerPunished = otherPlayer.round.get("punished");
+      if (Object.keys(otherPlayerPunished).includes(player._id)) {
+        punishedBy[otherPlayer._id] = otherPlayerPunished[player._id];
+        console.log(punishedBy);
+      }
+    });
+    player.round.set("punishedBy", punishedBy);
+    punishedBy = player.round.get("punishedBy");
+    let receivedPunishments = 0;
+    const punishedByKeys = Object.keys(punishedBy);
+    for (const key of punishedByKeys) {
+      if (punishedBy[key] != "0") {
+        amount = punishedBy[key];
+        receivedPunishments += parseFloat(amount);
+      }
+    }
+    const penalties =
+      parseFloat(receivedPunishments) * game.get("treatment").punishmentMagnitude;
+    player.round.set("penalties", penalties);
+  });
+};
+
+function computeRewards(game) {
+  game.players.forEach((player) => {
+    const rewarded = player.round.get("rewarded");
+    const rewardedKeys = Object.keys(rewarded);
+    
+    let cost = 0;
+    for (const key of rewardedKeys) {
+      if (rewarded[key] != "0") {
+        amount = rewarded[key];
+        cost += parseFloat(amount) * game.get("treatment").rewardCost;
+      } else {
+      }
     }
 
-    player.round.set("score", roundScore);
+    let rewardedBy = {};
 
-    const totalScore = player.get("score") || 0;
-    player.set("score", totalScore + roundScore);
-  }
+    player.round.set("costs", parseFloat(player.round.get("costs")) + cost);
+
+    const otherPlayers = _.reject(game.players, (p) => p._id === player._id);
+    otherPlayers.forEach((otherPlayer) => {
+      const otherPlayerRewarded = otherPlayer.round.get("rewarded");
+      if (Object.keys(otherPlayerRewarded).includes(player._id)) {
+        rewardedBy[otherPlayer._id] = otherPlayerRewarded[player._id];
+        console.log(rewardedBy);
+      }
+    });
+
+    player.round.set("rewardedBy", rewardedBy);
+    rewardedBy = player.round.get("rewardedBy");
+    
+    let receivedRewards = 0;
+    const rewardedByKeys = Object.keys(rewardedBy);
+    for (const key of rewardedByKeys) {
+      if (rewardedBy[key] != "0") {
+        amount = rewardedBy[key];
+        receivedRewards += parseFloat(amount);
+      }
+    }
+    const rewards =
+      parseFloat(receivedRewards) * game.get("treatment").rewardMagnitude;
+    player.round.set("rewards", rewards);
+  });
+};
+
+function computeIndividualPayoff(game) {
+  game.players.forEach((player) => {
+    const payoff = game.round.get("payoff");
+    const contribution = player.round.get("contribution");
+    const remainingEndowment =
+      parseFloat(game.get("treatment").endowment) - parseFloat(contribution);
+    player.round.set("remainingEndowment", remainingEndowment);
+    const penalties = player.round.get("penalties");
+    const rewards = player.round.get("rewards");
+    const costs = player.round.get("costs");
+    const roundPayoff =
+      parseFloat(payoff) +
+      parseFloat(rewards) +
+      parseFloat(remainingEndowment) -
+      parseFloat(penalties) -
+      parseFloat(costs);
+    player.round.set("roundPayoff", roundPayoff);
+  });
+};
+
+function computeTotalPayoff(game) {
+  let totalPayoff = 0;
+  game.players.forEach((player) => {
+    const cumulativePayoff = player.get("cumulativePayoff");
+    totalPayoff += parseFloat(cumulativePayoff);
+    game.set("totalPayoff", totalPayoff);
+  });
+}
+
+function convertPayoff(game) {
+  game.players.forEach((player) => {
+    const cumulativePayoff = player.get("cumulativePayoff");
+    let earnings = 0;
+    if (cumulativePayoff > 0) {
+      let earnings =
+        parseFloat(cumulativePayoff) * game.get("treatment").conversionRate;
+    } else {
+    }
+    player.set("earnings", earnings);
+  });
 }

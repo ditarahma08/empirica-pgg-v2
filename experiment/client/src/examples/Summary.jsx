@@ -1,11 +1,10 @@
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import { usePlayer, usePlayers, useGame, useRound, useStage } from "@empirica/core/player/classic/react";
 import { AvatarScores } from "../components/AvatarComplications";
 import { Button } from "../components/FunButton";
 import { DeductionDetails } from "../components/DeductionDetails";
 import { PlayerGrid } from "../components/PlayerGrid";
 import { HeaderWithTimer } from "./Header";
-import moment from "moment";
 
 export function Summary() {
     const player = usePlayer();
@@ -38,59 +37,23 @@ export function Summary() {
     const roundPayoff = player.round.get("roundPayoff");
 
     function handleSubmit() {
-        // game.append("log",{
-        //     verb:"submit", 
-        //     playerId:player._id, 
-        //     roundIndex:round.index, 
-        //     stage:stage.name, 
-        //     timestamp:moment(Date.now())});
         player.stage.set("submit", true);
     };
 
     function handleOnMouseEnter() {
         setSelf(player.id);
-        // game.append("log",{
-        //     verb:"viewOwnSummary", 
-        //     playerId:player._id, 
-        //     roundIndex:round.index, 
-        //     stage:stage.name, 
-        //     timestamp:moment(Date.now())
-        // });
     };
 
     function handleOnMouseLeave() {
         setSelf(null);
-        // game.append("log",{
-        //     verb:"exitOwnSummary", 
-        //     playerId:player._id, 
-        //     roundIndex:round.index, 
-        //     stage:stage.name, 
-        //     timestamp:moment(Date.now())
-        // });
     };
 
     function handleOnOtherMouseEnter() {
         setHovered(otherPlayer.id);
-        // game.append("log",{
-        //     verb:"viewOtherSummary", 
-        //     playerId:player._id, 
-        //     targetPlayerId:otherPlayer._id, 
-        //     roundIndex:round.index, 
-        //     stage:stage.name, 
-        //     timestamp:moment(Date.now())
-        // });
     };
 
     function handleOnOtherMouseLeave() {
         setHovered(null);
-        // game.append("log",{
-        //     verb:"exitOtherSummary", 
-        //     playerId:player._id, 
-        //     targetPlayerId:otherPlayer._id, 
-        //     roundIndex:round.index, 
-        //     stage:stage.name, 
-        //     timestamp:moment(Date.now())
-        // });
     }
 
     return (

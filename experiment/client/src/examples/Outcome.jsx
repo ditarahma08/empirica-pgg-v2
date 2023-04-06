@@ -1,12 +1,12 @@
 import React from "react";
 import { usePlayer, usePlayers, useRound, useStage, useGame } from "@empirica/core/player/classic/react";
+import { AvatarDeduction } from "../components/AvatarComplications";
 import { Button } from "../components/FunButton";
 import { CoinResults } from "../components/CoinResults";
 import { Label } from "../components/Label";
 import { PlayerGrid } from "../components/PlayerGrid";
 import { You } from "../components/You";
 import { HeaderWithTimer } from "./Header";
-import moment from "moment";
 
 export function Outcome() {
   const player = usePlayer();
@@ -28,9 +28,9 @@ export function Outcome() {
   const playerCount = players.length;
   const otherPlayers = players.filter((p) => p?.id !== player?.id);
 
-  const totalContributions = round.get("totalContributions");
-  const totalReturns = round.get("totalReturns");
-  const payoff = round.get("payoff");
+  const totalContributions = game.get("totalContributions");
+  const totalReturns = game.get("totalReturns");
+  const payoff = game.get("payoff");
 
   const contribution = player.round.get("contribution");
   const cumulativePayoff = player.get("cumulativePayoff");
@@ -47,12 +47,6 @@ export function Outcome() {
   }
 
   function handleSubmit() {
-    // game.append("log",{
-    //     verb:"submit", 
-    //     playerId:player._id, 
-    //     roundIndex:round.index, 
-    //     stage:stage.name, 
-    //     timestamp:moment(Date.now())});
     player.stage.set("submit", true);
   }
 

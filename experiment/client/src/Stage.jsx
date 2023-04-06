@@ -2,6 +2,7 @@ import {
   usePlayer,
   usePlayers,
   useRound,
+  useStage,
   useGame,
 } from "@empirica/core/player/classic/react";
 import { Loading } from "@empirica/core/player/react";
@@ -14,7 +15,7 @@ import { Summary } from "./examples/Summary";
 export function Stage() {
   const player = usePlayer();
   const players = usePlayers();
-  const round = useRound();
+  const stage = useStage();
   const game = useGame();
 
   if (player.stage.get("submit")) {
@@ -29,12 +30,12 @@ export function Stage() {
     );
   }
 
-  switch (round.get("task")) {
+  switch (stage.get("name")) {
     case "instructions":
       return <Instructions />;
     case "contribution":
       return <Contribution />;
-    case "minesweeper":
+    case "outcome":
       return <Outcome />;
     case "summary":
       return <Summary />;
