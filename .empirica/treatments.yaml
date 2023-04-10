@@ -1,0 +1,113 @@
+factors:
+    - name: playerCount
+      desc: playerCount determines the number of Players are in a Game.
+      values:
+        - value: 1
+        - value: 2
+        - value: 3
+        - value: 5
+        - value: 8
+        - value: 13
+    - name: numRounds
+      values:
+        - value: 1
+    - name: showNRounds
+      values:
+        - value: true
+    - name: endowment
+      values:
+        - value: 20
+    - name: basePay
+      values:
+        - value: 3
+    - name: conversionRate
+      values:
+        - value: 300
+    - name: contributionDuration
+      values:
+        - value: 45
+    - name: outcomeDuration
+      values:
+        - value: 45
+    - name: summaryDuration
+      values:
+        - value: 45
+    - name: showOtherSummaries
+      values:
+        - value: true
+    - name: showPunishmentId
+      values:
+        - value: false
+    - name: punishmentExists
+      values:
+        - value: true
+    - name: multiplier
+      values:
+        - value: 1.0 (1)
+        - value: 1
+    - name: punishmentCost
+      values:
+        - value: 2.0 (2)
+        - value: 2
+    - name: punishmentMagnitude
+      values:
+        - value: 6.0 (6)
+        - value: 6
+treatments:
+    - name: Solo
+      desc: Single-player Game
+      factors:
+        playerCount: 1
+    - name: Two Players
+      desc: Two-player Game
+      factors:
+        playerCount: 2
+    - name: pilot2_wave2_t0
+      factors:
+        basePay: 3
+        contributionDuration: 45
+        conversionRate: 300
+        endowment: 20
+        multiplier: 1.0 (1)
+        numRounds: 1
+        outcomeDuration: 45
+        playerCount: 2
+        punishmentCost: 2.0 (2)
+        punishmentExists: true
+        punishmentMagnitude: 6.0 (6)
+        showNRounds: true
+        showOtherSummaries: true
+        showPunishmentId: false
+        summaryDuration: 45
+    - name: example
+      factors:
+        basePay: 3
+        contributionDuration: 45
+        conversionRate: 300
+        endowment: 20
+        multiplier: 1
+        numRounds: 1
+        outcomeDuration: 45
+        playerCount: 1
+        punishmentCost: 2
+        punishmentExists: true
+        punishmentMagnitude: 6
+        showNRounds: true
+        showOtherSummaries: true
+        summaryDuration: 45
+    - name: example two players
+      factors:
+        basePay: 3
+        contributionDuration: 45
+        conversionRate: 300
+        endowment: 20
+        multiplier: 1
+        numRounds: 1
+        outcomeDuration: 45
+        playerCount: 2
+        punishmentCost: 2
+        punishmentExists: true
+        punishmentMagnitude: 6
+        showNRounds: true
+        showOtherSummaries: true
+        summaryDuration: 45
