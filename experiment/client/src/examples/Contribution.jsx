@@ -20,9 +20,6 @@ export function Contribution() {
     const round = useRound();
     const game = useGame();
 
-    const roundSound = new Audio("sounds/round-sound.mp3");
-    const gameSound = new Audio("sounds/bell.mp3");
-
     const endowment = game.get("treatment").endowment;
     const multiplier = game.get("treatment").multiplier;
     const contribution = player.round.get("contribution") || 0;
@@ -36,15 +33,6 @@ export function Contribution() {
         player.stage.set("submit", true);
         ;
     };
-
-    // useEffect(() => {
-    //     if (game.get("justStarted")) {
-    //         gameSound.play();
-    //         game.set("justStarted", false);
-    //     } else {
-    //         roundSound.play();
-    //     }
-    // }, []);
 
     return (
         <div className="h-full grid grid-rows-[min-content_1fr]">

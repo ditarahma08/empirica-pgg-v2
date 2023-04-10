@@ -54,26 +54,13 @@ Empirica.onGameStart(({ game }) => {
   // round.addStage({ name: "Third", duration: 300 });
 
   const round = game.addRound({
-    name: "Round 1 - Contribution",
-    task: "contribution",
+    name: "PGG",
+    task: "pgg",
   })
 
   round.addStage({ name: "contribution", duration: 300000 });
   round.addStage({ name: "outcome", duration: 300000 });
   round.addStage({ name: "summary", duration: 300000 })
-
-  // const round2 = game.addRound({
-  //   name: "Round 2 - Outcome & Deductions",
-  //   task: "outcome",
-  // });
-  // round2.addStage({ name: "outcome", duration: 300000 });
-
-  // const round3 = game.addRound({
-  //   name: "Summary",
-  //   task: "summary",
-  // });
-  // round3.addStage({ name: "summary", duration: 300000 });
-
 });
 
 Empirica.onRoundStart(({ round }) => {
