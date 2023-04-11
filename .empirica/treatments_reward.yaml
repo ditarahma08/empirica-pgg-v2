@@ -1,6 +1,6 @@
 factors:
 - name: playerCount
-  desc: add description here
+  desc: The Number of players participating in the given game.
   values:
   - name: playerCount
     value: 2
@@ -98,9 +98,9 @@ factors:
   desc: add description here
   values:
   - name: showPunishmentId
-    value: false
-  - name: showPunishmentId
     value: true
+  - name: showPunishmentId
+    value: false
 - name: punishmentExists
   desc: add description here
   values:
@@ -108,6 +108,41 @@ factors:
     value: true
   - name: punishmentExists
     value: false
+- name: allOrNothing
+  desc: add description here
+  values:
+  - name: allOrNothing
+    value: true
+  - name: allOrNothing
+    value: false
+- name: chat
+  desc: add description here
+  values:
+  - name: chat
+    value: true
+  - name: chat
+    value: false
+- name: rewardExists
+  desc: Can players reward each other?
+  values:
+  - name: rewardExists
+    value: true
+  - name: rewardExists
+    value: false
+- name: rewardCost
+  desc: The cost of each unit of reward
+  values:
+  - name: rewardCost
+    value: 2
+  - name: rewardCost
+    value: 5
+- name: rewardMagnitude
+  desc: The magnitude of each reward given.
+  values:
+  - name: rewardMagnitude
+    value: 6
+  - name: rewardMagnitude
+    value: 12
 treatments:
 - name: pilot2_wave2_t0
   factors:
