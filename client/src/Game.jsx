@@ -1,7 +1,6 @@
 import React from "react";
 import { Profile } from "./Profile";
 import { Stage } from "./Stage";
-import "../main.css"
 
 export function Game() {
   return (

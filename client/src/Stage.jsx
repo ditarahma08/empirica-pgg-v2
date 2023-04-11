@@ -11,6 +11,7 @@ import { Instructions } from "./examples/Instructions";
 import { Contribution } from "./examples/Contribution";
 import { Outcome } from "./examples/Outcome";
 import { Summary } from "./examples/Summary";
+import "../main.css"
 
 export function Stage() {
   const player = usePlayer();
