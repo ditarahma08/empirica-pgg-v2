@@ -1,5 +1,6 @@
 import { ClassicListenersCollector } from "@empirica/core/admin/classic";
 export const Empirica = new ClassicListenersCollector();
+import reject from 'lodash/reject';
 
 export const AnimalList = [
   "sloth",
@@ -87,9 +88,9 @@ Empirica.onStageStart(({ stage }) => {
 Empirica.onStageEnded(({ stage }) => {
   stage.set("stageEndTimestamp", Date.now());
 
-  if (stage.round.get("task") === "contribution") {
+  if (stage.get("name") === "contribution") {
     computePayoff(stage.currentGame);
-  } else if (stage.round.get("task") === "outcome") {
+  } else if (stage.get("name") === "outcome") {
     computePunishmentCosts(stage.currentGame);
     computeRewards(stage.currentGame);
     computeIndividualPayoff(stage.currentGame);
@@ -109,8 +110,8 @@ Empirica.onRoundEnded(({ round }) => {
 
 Empirica.onGameEnded(({ game }) => {
   game.set("gameEndTimestamp", Date.now());
-  computeTotalPayoff(game.currentGame);
-  convertPayoff(game.currentGame);
+  computeTotalPayoff(game);
+  convertPayoff(game);
 });
 
 function computePayoff(game) {
@@ -151,11 +152,11 @@ function computePunishmentCosts(game) {
     }
     let punishedBy = {};
     player.round.set("costs", cost);
-    const otherPlayers = _.reject(game.players, (p) => p._id === player._id);
+    const otherPlayers = reject(game.players, (p) => p.id === player.id);
     otherPlayers.forEach((otherPlayer) => {
       const otherPlayerPunished = otherPlayer.round.get("punished");
-      if (Object.keys(otherPlayerPunished).includes(player._id)) {
-        punishedBy[otherPlayer._id] = otherPlayerPunished[player._id];
+      if (Object.keys(otherPlayerPunished).includes(player.id)) {
+        punishedBy[otherPlayer.id] = otherPlayerPunished[player.id];
         console.log(punishedBy);
       }
     });
@@ -193,11 +194,11 @@ function computeRewards(game) {
 
     player.round.set("costs", parseFloat(player.round.get("costs")) + cost);
 
-    const otherPlayers = _.reject(game.players, (p) => p._id === player._id);
+    const otherPlayers = reject(game.players, (p) => p.id === player.id);
     otherPlayers.forEach((otherPlayer) => {
       const otherPlayerRewarded = otherPlayer.round.get("rewarded");
-      if (Object.keys(otherPlayerRewarded).includes(player._id)) {
-        rewardedBy[otherPlayer._id] = otherPlayerRewarded[player._id];
+      if (Object.keys(otherPlayerRewarded).includes(player.id)) {
+        rewardedBy[otherPlayer.id] = otherPlayerRewarded[player.id];
         console.log(rewardedBy);
       }
     });
@@ -221,7 +222,7 @@ function computeRewards(game) {
 
 function computeIndividualPayoff(game) {
   game.players.forEach((player) => {
-    const payoff = game.round.get("payoff");
+    const payoff = game.get("payoff");
     const contribution = player.round.get("contribution");
     const remainingEndowment =
       parseFloat(game.get("treatment").endowment) - parseFloat(contribution);
