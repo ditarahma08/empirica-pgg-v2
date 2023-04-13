@@ -19,7 +19,7 @@ export class InstructionsStepOne extends React.Component {
     for (let i = 0; i < playerCount - 1; i++) {
       const avatar = pickRandom(AnimalList, exclude);
       exclude.push(avatar);
-      otherPlayers.push({ _id: i, avatar, submitted: false });
+      otherPlayers.push({ id: i, avatar, submitted: false });
     }
 
     this.state = { ...this.state, otherPlayers };

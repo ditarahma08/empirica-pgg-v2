@@ -62,7 +62,7 @@ export class MockSummary extends React.Component {
           <div className="h-full relative">
             <div className="h-full relative flex flex-col items-center justify-center pb-48">
               <div
-                onMouseEnter={() => this.setState({ self: player._id })}
+                onMouseEnter={() => this.setState({ self: player.id })}
                 onMouseLeave={() => this.setState({ self: null })}
               >
                 <Highlighter name="you" pad={80} highlight={highlight}>
@@ -154,10 +154,10 @@ export class MockSummary extends React.Component {
                   return (
                     <div
                       dir="ltr"
-                      key={player._id}
+                      key={player.id}
                       className="w-full h-full flex justify-center items-center"
                       onMouseEnter={() =>
-                        this.setState({ hovered: player._id })
+                        this.setState({ hovered: player.id })
                       }
                       onMouseLeave={() => this.setState({ hovered: null })}
                     >
@@ -228,7 +228,7 @@ function Details({
   isSelf,
   showPunishmentId,
 }) {
-  const player = players.find((p) => p._id === selectedPlayerID);
+  const player = players.find((p) => p.id === selectedPlayerID);
 
   const { punished, punishedBy, rewarded, rewardedBy, contribution, roundNet } =
     player;
@@ -237,7 +237,7 @@ function Details({
   for (const playerID in punished) {
     const amount = punished[playerID] * punishmentCost || 0;
     if (amount === 0) continue;
-    const otherPlayer = players.find((p) => p._id === playerID);
+    const otherPlayer = players.find((p) => p.id === playerID);
     deductionsSpent.push({ animal: otherPlayer.get("avatar"), amount });
   }
 
@@ -245,7 +245,7 @@ function Details({
   for (const playerID in punishedBy) {
     const amount = punishedBy[playerID] * punishmentMagnitude || 0;
     if (amount === 0) continue;
-    const otherPlayer = players.find((p) => p._id === playerID);
+    const otherPlayer = players.find((p) => p.id === playerID);
     deductionsReceived.push({ animal: otherPlayer.get("avatar"), amount });
   }
 
@@ -253,7 +253,7 @@ function Details({
   for (const playerID in rewarded) {
     const amount = rewarded[playerID] * rewardCost || 0;
     if (amount === 0) continue;
-    const otherPlayer = players.find((p) => p._id === playerID);
+    const otherPlayer = players.find((p) => p.id === playerID);
     rewardsSpent.push({ animal: otherPlayer.get("avatar"), amount });
   }
 
@@ -261,7 +261,7 @@ function Details({
   for (const playerID in rewardedBy) {
     const amount = rewardedBy[playerID] * rewardMagnitude || 0;
     if (amount === 0) continue;
-    const otherPlayer = players.find((p) => p._id === playerID);
+    const otherPlayer = players.find((p) => p.id === playerID);
     rewardsReceived.push({ animal: otherPlayer.get("avatar"), amount });
   }
 

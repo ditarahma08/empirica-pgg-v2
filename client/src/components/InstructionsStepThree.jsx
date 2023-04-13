@@ -22,7 +22,7 @@ function genRP(player, players, budget) {
       continue;
     }
 
-    given[player2._id] = budgets.pop();
+    given[player2.id] = budgets.pop();
   }
 
   return given;
@@ -92,12 +92,12 @@ function applyRPReceived(player, allPlayers, treatment) {
 
     const { punished, rewarded } = player2;
 
-    if (punished[player._id]) {
-      player.punishedBy[player2._id] = punished[player._id];
+    if (punished[player.id]) {
+      player.punishedBy[player2.id] = punished[player.id];
     }
 
-    if (rewarded[player._id]) {
-      player.rewardedBy[player2._id] = rewarded[player._id];
+    if (rewarded[player.id]) {
+      player.rewardedBy[player2.id] = rewarded[player.id];
     }
   }
 
@@ -127,7 +127,7 @@ export class InstructionsStepThree extends React.Component {
       exclude.push(avatar);
 
       otherPlayers.push({
-        _id: i,
+        id: i,
         avatar,
         submitted: false,
       });

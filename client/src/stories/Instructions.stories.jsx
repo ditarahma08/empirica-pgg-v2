@@ -17,7 +17,7 @@ export function StepOne() {
         allOrNothing: false,
       }}
       player={{
-        _id: 10000,
+        id: 10000,
         avatar: "dog",
       }}
     />
@@ -43,7 +43,7 @@ export function StepTwo() {
         allOrNothing: false,
       }}
       player={{
-        _id: 10000,
+        id: 10000,
         avatar: "dog",
         punished: {},
       }}
@@ -71,7 +71,7 @@ export function StepThree() {
       }}
       roundPayoff={roundPayoff}
       player={{
-        _id: 10000,
+        id: 10000,
         avatar: "dog",
         punished: {},
         punishedBy: {},

@@ -49,8 +49,8 @@ export function Summary() {
         setSelf(null);
     };
 
-    function handleOnOtherMouseEnter() {
-        setHovered(otherPlayer.id);
+    function handleOnOtherMouseEnter(id) {
+        setHovered(id);
     };
 
     function handleOnOtherMouseLeave() {
@@ -145,7 +145,7 @@ export function Summary() {
                                     dir="ltr"
                                     key={otherPlayer.id}
                                     className="w-full h-full flex justify-center items-center"
-                                    onMouseEnter={() => handleOnOtherMouseEnter()}
+                                    onMouseEnter={() => handleOnOtherMouseEnter(otherPlayer.id)}
                                     onMouseLeave={() => handleOnOtherMouseLeave()}
                                 >
                                     <AvatarScores

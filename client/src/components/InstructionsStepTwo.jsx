@@ -95,7 +95,7 @@ export class InstructionsStepTwo extends React.Component {
       exclude.push(avatar);
 
       otherPlayers.push({
-        _id: i,
+        id: i,
         avatar,
         submitted: false,
         contribution: pickRandomNum(0, endowment),
@@ -116,7 +116,7 @@ export class InstructionsStepTwo extends React.Component {
 
           this.setState({
             otherPlayers: this.state.otherPlayers.map((p) => {
-              if (p._id === id) {
+              if (p.id === id) {
                 return {
                   ...p,
                   ...changes,

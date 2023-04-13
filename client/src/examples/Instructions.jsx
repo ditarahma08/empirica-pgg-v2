@@ -24,7 +24,7 @@ export function Instructions() {
                         onNext={onNext}
                         treatment={treatment}
                         player={{
-                            _id: 10000,
+                            id: 10000,
                             avatar: "elephant",
                         }}
                     />;
@@ -33,7 +33,7 @@ export function Instructions() {
                         onNext={onNext}
                         treatment={treatment}
                         player={{
-                            _id: 10000,
+                            id: 10000,
                             avatar: "elephant",
                             punished: {},
                         }}
@@ -43,7 +43,7 @@ export function Instructions() {
                         onNext={onNext}
                         treatment={treatment}
                         player={{
-                            _id: 10000,
+                            id: 10000,
                             avatar: "elephant",
                             punished: {},
                             punishedBy: {},

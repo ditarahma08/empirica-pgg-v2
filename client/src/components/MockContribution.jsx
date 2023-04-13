@@ -106,7 +106,7 @@ export class MockContribution extends React.Component {
               <PlayerGrid>
                 {otherPlayers.map((player, i) => (
                   <div
-                    key={player._id}
+                    key={player.id}
                     className="flex justify-center items-center"
                   >
                     <div dir="ltr" className="w-16">

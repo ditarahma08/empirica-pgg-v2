@@ -128,7 +128,7 @@ export class MockOutcome extends React.Component {
                 {otherPlayers.map((otherPlayer, i) => {
                   return (
                     <div
-                      key={otherPlayer._id}
+                      key={otherPlayer.id}
                       className="flex justify-center items-center"
                     >
                       <div dir="ltr" className="w-[6.5rem]">
@@ -147,7 +147,7 @@ export class MockOutcome extends React.Component {
                             if (otherPlayer.punishment > 0) {
                               console.log("add p");
                               otherPlayer.punish(
-                                otherPlayer._id,
+                                otherPlayer.id,
                                 -otherPlayer.punishment + 1
                               );
                             } else if (rewardExists) {
@@ -162,7 +162,7 @@ export class MockOutcome extends React.Component {
                               ) {
                                 console.log("add r");
                                 otherPlayer.punish(
-                                  otherPlayer._id,
+                                  otherPlayer.id,
                                   otherPlayer.reward + 1
                                 );
                               }
@@ -172,7 +172,7 @@ export class MockOutcome extends React.Component {
                             if (otherPlayer.reward > 0) {
                               console.log("deduct r");
                               otherPlayer.punish(
-                                otherPlayer._id,
+                                otherPlayer.id,
                                 otherPlayer.reward - 1
                               );
                             } else if (punishmentExists) {
@@ -182,7 +182,7 @@ export class MockOutcome extends React.Component {
                                 endowment
                               ) {
                                 otherPlayer.punish(
-                                  otherPlayer._id,
+                                  otherPlayer.id,
                                   -otherPlayer.punishment - 1
                                 );
                               }

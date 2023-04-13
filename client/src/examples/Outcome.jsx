@@ -104,8 +104,8 @@ export function Outcome() {
             <div className="h-full grid grid-rows-1">
                 <PlayerGrid>
                     {otherPlayers.map((otherPlayer, i) => {
-                        const punished = punishments[otherPlayer._id] || 0;
-                        const added = rewards[otherPlayer._id] || 0;
+                        const punished = punishments[otherPlayer.id] || 0;
+                        const added = rewards[otherPlayer.id] || 0;
 
                         const punish = (increase) => {
                             if (increase) {
@@ -114,7 +114,7 @@ export function Outcome() {
                                     return;
                                 }
 
-                                punishments[otherPlayer._id] = punished + 1;
+                                punishments[otherPlayer.id] = punished + 1;
                     
                                 // game.append("log",{
                                 //     verb:"addPunishment", 
@@ -125,7 +125,7 @@ export function Outcome() {
                                 //     timestamp:moment(Date.now());
                     
                             } else {
-                                punishments[otherPlayer._id] = punished - 1;
+                                punishments[otherPlayer.id] = punished - 1;
 
                                 // game.append("log",{
                                 //     verb:"removePunishment", 
@@ -146,7 +146,7 @@ export function Outcome() {
 
                                 return;
                             }
-                            rewards[otherPlayer._id] = added + 1;
+                            rewards[otherPlayer.id] = added + 1;
 
                             // game.append("log",{
                             //     verb:"addReward", 
@@ -157,7 +157,7 @@ export function Outcome() {
                             //     timestamp:moment(TimeSync.serverTime(null, 1000))});
                             
                             } else {
-                            rewards[otherPlayer._id] = added - 1;
+                            rewards[otherPlayer.id] = added - 1;
 
                             // game.append("log",{
                             //     verb:"removeReward", 
@@ -189,7 +189,7 @@ export function Outcome() {
 
                         return (
                             <div
-                            key={player._id}
+                            key={player.id}
                             className="flex justify-center items-center"
                             >
                             <div dir="ltr" className="w-[6.5rem]">

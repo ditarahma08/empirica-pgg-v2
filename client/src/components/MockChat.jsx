@@ -31,7 +31,7 @@ export function MockChatView({
               onMessage({
                 text,
                 avatar: player.avatar,
-                playerId: player._id,
+                playerId: player.id,
                 id: randID(),
                 timestamp: Date.now(),
               });
