@@ -1,6 +1,8 @@
 import { ClassicListenersCollector } from "@empirica/core/admin/classic";
 export const Empirica = new ClassicListenersCollector();
 import reject from 'lodash/reject';
+import times from 'lodash/times';
+import { dev } from "../../dev.js";
 
 export const AnimalList = [
   "sloth",
@@ -54,14 +56,38 @@ Empirica.onGameStart(({ game }) => {
   // round.addStage({ name: "Second", duration: 300 });
   // round.addStage({ name: "Third", duration: 300 });
 
-  const round = game.addRound({
-    name: "PGG",
-    task: "pgg",
-  })
+  // const round = game.addRound({
+  //   name: "PGG",
+  //   task: "pgg",
+  // })
 
-  round.addStage({ name: "contribution", duration: 300000 });
-  round.addStage({ name: "outcome", duration: 300000 });
-  round.addStage({ name: "summary", duration: 300000 })
+  // round.addStage({ name: "contribution", duration: 300000 });
+  // round.addStage({ name: "outcome", duration: 300000 });
+  // round.addStage({ name: "summary", duration: 300000 });
+
+  times(game.get("treatment").numRounds, (i) => {
+    const round = game.addRound();
+
+    round.addStage({
+      name: "contribution",
+      displayName: "Contribution",
+      duration: dev ? 300000 : game.get("treatment").contributionDuration,
+    });
+
+    round.addStage({
+      name: "outcome",
+      displayName: game.get("treatment").punishmentExists
+        ? "Outcome & Deductions"
+        : "Outcome",
+      duration: dev ? 300000 : game.get("treatment").outcomeDuration,
+    });
+
+    round.addStage({
+      name: "summary",
+      displayName: "Summary",
+      duration: dev ? 300000 : game.get("treatment").summaryDuration,
+    });
+  });
 });
 
 Empirica.onRoundStart(({ round }) => {

@@ -268,7 +268,7 @@ function Details({
   return (
     <DeductionDetails
       animal={player.avatar}
-      submitted={player.stage.submitted}
+      submitted={player.stage.get("submit")}
       contributed={contribution}
       gains={roundNet}
       punishmentExists={punishmentExists}

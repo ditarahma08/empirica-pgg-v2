@@ -127,7 +127,7 @@ export class InstructionsStepOne extends React.Component {
             id: state.messages.length,
             text: "Hello!",
             avatar: state.otherPlayers[0].avatar,
-            playerId: state.otherPlayers[0]._id,
+            playerId: state.otherPlayers[0].id,
             timestamp: Date.now(),
           },
         ],

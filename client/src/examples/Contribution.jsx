@@ -74,7 +74,7 @@ export function Contribution() {
                             <div dir="ltr" className="w-16">
                             <Avatar
                                 animal={p.get("avatar")}
-                                submitted={p.stage.submitted}
+                                submitted={p.stage.get("submit")}
                             />
                             </div>
                         </div>
