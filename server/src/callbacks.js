@@ -47,34 +47,27 @@ Empirica.onGameStart(({ game }) => {
     player.set("cumulativePayoff", game.get("treatment").endowment);
   });
 
-  // const round = game.addRound({
-  //   name: "Instructions",
-  //   task: "instructions"
-  // });
+  const round = game.addRound({
+    name: "Instructions",
+    task: "instructions"
+  });
 
-  // round.addStage({ name: "First", duration: 300 });
-  // round.addStage({ name: "Second", duration: 300 });
-  // round.addStage({ name: "Third", duration: 300 });
-
-  // const round = game.addRound({
-  //   name: "PGG",
-  //   task: "pgg",
-  // })
-
-  // round.addStage({ name: "contribution", duration: 300000 });
-  // round.addStage({ name: "outcome", duration: 300000 });
-  // round.addStage({ name: "summary", duration: 300000 });
+  round.addStage({ name: "First", duration: 300 });
+  round.addStage({ name: "Second", duration: 300 });
+  round.addStage({ name: "Third", duration: 300 });
 
   times(game.get("treatment").numRounds, (i) => {
-    const round = game.addRound();
+    const round1 = game.addRound();
 
-    round.addStage({
+    round1.set("currentRound", i)
+
+    round1.addStage({
       name: "contribution",
       displayName: "Contribution",
       duration: dev ? 300000 : game.get("treatment").contributionDuration,
     });
 
-    round.addStage({
+    round1.addStage({
       name: "outcome",
       displayName: game.get("treatment").punishmentExists
         ? "Outcome & Deductions"
@@ -82,7 +75,7 @@ Empirica.onGameStart(({ game }) => {
       duration: dev ? 300000 : game.get("treatment").outcomeDuration,
     });
 
-    round.addStage({
+    round1.addStage({
       name: "summary",
       displayName: "Summary",
       duration: dev ? 300000 : game.get("treatment").summaryDuration,

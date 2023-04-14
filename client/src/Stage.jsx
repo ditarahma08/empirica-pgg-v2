@@ -18,6 +18,7 @@ export function Stage() {
   const players = usePlayers();
   const stage = useStage();
   const game = useGame();
+  const round = useRound();
 
   const roundSound = new Audio("sounds/round-sound.mp3");
   const gameSound = new Audio("sounds/bell.mp3");
@@ -31,16 +32,19 @@ export function Stage() {
       }
   }, []);
 
-  switch (stage.get("name")) {
+  switch (round.get("task")) {
     case "instructions":
       return <Instructions />;
-    case "contribution":
-      return <Contribution />;
-    case "outcome":
-      return <Outcome />;
-    case "summary":
-      return <Summary />;
     default:
-      return <div>Unknown task</div>;
+      switch (stage.get("name")) {
+        case "contribution":
+          return <Contribution />;
+        case "outcome":
+          return <Outcome />;
+        case "summary":
+          return <Summary />;
+        default:
+          return <div>Unknown task</div>;
+      }
   }
 }

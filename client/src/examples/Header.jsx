@@ -14,7 +14,7 @@ export function HeaderWithTimer() {
 
     const [help, setHelp] = useState(false)
 
-    let roundNum = `Round ${round?.index ? round?.index + 1 : 1}`;
+    let roundNum = `Round ${round.get("currentRound") ? round.get("currentRound") + 1 : 1}`;
     if (game.get("treatment").showNRounds) {
         roundNum += ` of ${game.get("treatment").numRounds}`;
     }
