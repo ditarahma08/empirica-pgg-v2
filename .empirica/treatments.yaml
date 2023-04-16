@@ -108,6 +108,20 @@ factors:
     value: true
   - name: punishmentExists
     value: false
+- name: punishmentFrequency
+  desc: add description here
+  values:
+  - name: punishmentFrequency
+    value: 0
+  - name: punishmentFrequency
+    value: 1
+- name: rewardFrequency
+  desc: add description here
+  values:
+  - name: rewardFrequency
+    value: 0
+  - name: rewardFrequency
+    value: 1
 treatments:
 - name: pilot2_wave2_t0
   factors:
@@ -126,6 +140,8 @@ treatments:
     showOtherSummaries: true
     showPunishmentId: false
     summaryDuration: 45
+    punishmentFrequency: 1
+    rewardFrequency: 1
 - name: pilot2_wave2_t1
   factors:
     basePay: 3
@@ -143,6 +159,8 @@ treatments:
     showOtherSummaries: false
     showPunishmentId: true
     summaryDuration: 45
+    punishmentFrequency: 1
+    rewardFrequency: 1
 - name: pilot2_wave2_t2
   factors:
     basePay: 3
@@ -160,6 +178,8 @@ treatments:
     showOtherSummaries: true
     showPunishmentId: true
     summaryDuration: 45
+    punishmentFrequency: 1
+    rewardFrequency: 1
 - name: pilot2_wave2_t3
   factors:
     basePay: 3
@@ -177,6 +197,8 @@ treatments:
     showOtherSummaries: false
     showPunishmentId: false
     summaryDuration: 45
+    punishmentFrequency: 1
+    rewardFrequency: 1
 - name: pilot2_wave2_t4
   factors:
     basePay: 3
@@ -194,6 +216,8 @@ treatments:
     showOtherSummaries: true
     showPunishmentId: false
     summaryDuration: 45
+    punishmentFrequency: 1
+    rewardFrequency: 1
 - name: pilot2_wave2_t5
   factors:
     basePay: 3
@@ -211,6 +235,8 @@ treatments:
     showOtherSummaries: false
     showPunishmentId: true
     summaryDuration: 45
+    punishmentFrequency: 1
+    rewardFrequency: 1
 - name: pilot2_wave2_t6
   factors:
     basePay: 3
@@ -228,6 +254,8 @@ treatments:
     showOtherSummaries: true
     showPunishmentId: true
     summaryDuration: 45
+    punishmentFrequency: 1
+    rewardFrequency: 1
 - name: pilot2_wave2_t7
   factors:
     basePay: 3
@@ -245,3 +273,5 @@ treatments:
     showOtherSummaries: false
     showPunishmentId: false
     summaryDuration: 45
+    punishmentFrequency: 1
+    rewardFrequency: 1

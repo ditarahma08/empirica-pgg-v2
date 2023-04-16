@@ -23,6 +23,8 @@ export function Outcome() {
     rewardCost,
     rewardExists,
     rewardMagnitude,
+    punishmentFrequency,
+    rewardFrequency,
   } = game.get("treatment");
 
   const playerCount = players.length;
@@ -36,6 +38,8 @@ export function Outcome() {
   const cumulativePayoff = player.get("cumulativePayoff");
   const punishments = player.round.get("punished");
   const rewards = player.round.get("rewarded");
+
+  const currentRound = round.get("currentRound");
 
   let totalCost = 0;
   for (const key in punishments) {
@@ -172,19 +176,32 @@ export function Outcome() {
                         };
 
                         const add = () => {
-                            if (punished > 0) {
-                            punish(false);
+                            const rewardActive = (currentRound + 1) % rewardFrequency;
+
+                            if (rewardFrequency > 0 && rewardActive === 0) {
+                                if (punished > 0) {
+                                    punish(false);
+                                } else {
+                                    reward(true);
+                                }
                             } else {
-                            reward(true);
+                                alert("This action can not be done in this round.");
                             }
                         };
 
                         const deduct = () => {
-                            if (added > 0) {
-                            reward(false);
+                            const punishmentActive = (currentRound + 1) % punishmentFrequency;
+
+                            if (punishmentFrequency > 0 && punishmentActive === 0) {
+                                if (added > 0) {
+                                    reward(false);
+                                } else {
+                                    punish(true);
+                                }
                             } else {
-                            punish(true);
+                                alert("This action can not be done in this round.");
                             }
+                            
                         };
 
                         return (
@@ -197,7 +214,7 @@ export function Outcome() {
                                 animal={otherPlayer.get("avatar")}
                                 submitted={otherPlayer.stage.get("submit")}
                                 contributed={otherPlayer.round.get("contribution")}
-                                disabled={player.stage.submitted}
+                                disabled={player.stage.get("submit")}
                                 punishmentExists={punishmentExists}
                                 deducted={punished * punishmentMagnitude}
                                 rewardExists={rewardExists}
