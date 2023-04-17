@@ -122,6 +122,32 @@ factors:
     value: 0
   - name: rewardFrequency
     value: 1
+- name: networkInfoDisabled
+  desc: add description here
+  values:
+  - name: networkInfoDisabled
+    value: true
+  - name: networkInfoDisabled
+    value: false
+- name: networkRewardDisabled
+  desc: add description here
+  values:
+  - name: networkRewardDisabled
+    value: true
+  - name: networkRewardDisabled
+    valie: false
+- name: networkPunishmentDisabled
+  desc: add description here
+  values:
+  - name: networkPunishmentDisabled
+    value: true
+  - name: networkPunishmentDisabled
+    value: false
+- name: networkMatrix
+  desc: add description here
+  values:
+  - name: networkMatrix
+    value: []
 treatments:
 - name: pilot2_wave2_t0
   factors:
@@ -142,6 +168,10 @@ treatments:
     summaryDuration: 45
     punishmentFrequency: 1
     rewardFrequency: 1
+    networkInfoDisabled: false
+    networkRewardDisabled: false
+    networkPunishmentDisabled: false
+    networkMatrix: []
 - name: pilot2_wave2_t1
   factors:
     basePay: 3
@@ -161,6 +191,10 @@ treatments:
     summaryDuration: 45
     punishmentFrequency: 1
     rewardFrequency: 1
+    networkInfoDisabled: false
+    networkRewardDisabled: false
+    networkPunishmentDisabled: false
+    networkMatrix: []
 - name: pilot2_wave2_t2
   factors:
     basePay: 3
@@ -180,6 +214,10 @@ treatments:
     summaryDuration: 45
     punishmentFrequency: 1
     rewardFrequency: 1
+    networkInfoDisabled: false
+    networkRewardDisabled: false
+    networkPunishmentDisabled: false
+    networkMatrix: []
 - name: pilot2_wave2_t3
   factors:
     basePay: 3
@@ -199,6 +237,10 @@ treatments:
     summaryDuration: 45
     punishmentFrequency: 1
     rewardFrequency: 1
+    networkInfoDisabled: false
+    networkRewardDisabled: false
+    networkPunishmentDisabled: false
+    networkMatrix: []
 - name: pilot2_wave2_t4
   factors:
     basePay: 3
@@ -218,6 +260,10 @@ treatments:
     summaryDuration: 45
     punishmentFrequency: 1
     rewardFrequency: 1
+    networkInfoDisabled: false
+    networkRewardDisabled: false
+    networkPunishmentDisabled: false
+    networkMatrix: []
 - name: pilot2_wave2_t5
   factors:
     basePay: 3
@@ -237,6 +283,10 @@ treatments:
     summaryDuration: 45
     punishmentFrequency: 1
     rewardFrequency: 1
+    networkInfoDisabled: false
+    networkRewardDisabled: false
+    networkPunishmentDisabled: false
+    networkMatrix: []
 - name: pilot2_wave2_t6
   factors:
     basePay: 3
@@ -256,6 +306,10 @@ treatments:
     summaryDuration: 45
     punishmentFrequency: 1
     rewardFrequency: 1
+    networkInfoDisabled: false
+    networkRewardDisabled: false
+    networkPunishmentDisabled: false
+    networkMatrix: []
 - name: pilot2_wave2_t7
   factors:
     basePay: 3
@@ -275,3 +329,30 @@ treatments:
     summaryDuration: 45
     punishmentFrequency: 1
     rewardFrequency: 1
+    networkInfoDisabled: false
+    networkRewardDisabled: false
+    networkPunishmentDisabled: false
+    networkMatrix: []
+- name: pilot2_wave2_t8
+  factors:
+    basePay: 3
+    contributionDuration: 45
+    conversionRate: 300
+    endowment: 20
+    multiplier: 1
+    numRounds: 30
+    outcomeDuration: 45
+    playerCount: 3
+    punishmentCost: 3
+    punishmentExists: false
+    punishmentMagnitude: 11
+    showNRounds: true
+    showOtherSummaries: false
+    showPunishmentId: false
+    summaryDuration: 45
+    punishmentFrequency: 1
+    rewardFrequency: 1
+    networkInfoDisabled: false
+    networkRewardDisabled: false
+    networkPunishmentDisabled: false
+    networkMatrix: [[0,1,0], [1,0,1], [0,1,0]]
