@@ -344,7 +344,7 @@ treatments:
     outcomeDuration: 45
     playerCount: 3
     punishmentCost: 3
-    punishmentExists: false
+    punishmentExists: true
     punishmentMagnitude: 11
     showNRounds: true
     showOtherSummaries: false

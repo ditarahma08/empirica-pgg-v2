@@ -33,11 +33,18 @@ export function Outcome() {
   const totalContributions = game.get("totalContributions");
   const totalReturns = game.get("totalReturns");
   const payoff = game.get("payoff");
+  const showNetworkInfo = game.get("treatment").networkInfoDisabled;
+  const network = game.get("treatment").networkMatrix;
+  const connectionRewardDisabled = game.get("treatment").networkRewardDisabled;
+  const connectionPunishDisabled = game.get("treatment").networkPunishmentDisabled;
 
   const contribution = player.round.get("contribution");
   const cumulativePayoff = player.get("cumulativePayoff");
   const punishments = player.round.get("punished");
   const rewards = player.round.get("rewarded");
+  const avatarId = player.get("avatarId");
+
+  const connection = otherPlayers.filter((p) => network[avatarId][p.get("avatarId")] == 1);
 
   const currentRound = round.get("currentRound");
 
@@ -107,7 +114,7 @@ export function Outcome() {
 
             <div className="h-full grid grid-rows-1">
                 <PlayerGrid>
-                    {otherPlayers.map((otherPlayer, i) => {
+                    {!showNetworkInfo && otherPlayers.map((otherPlayer, i) => {
                         const punished = punishments[otherPlayer.id] || 0;
                         const added = rewards[otherPlayer.id] || 0;
 
@@ -120,24 +127,8 @@ export function Outcome() {
 
                                 punishments[otherPlayer.id] = punished + 1;
                     
-                                // game.append("log",{
-                                //     verb:"addPunishment", 
-                                //     playerId:player._id, 
-                                //     targetPlayerId:otherPlayer._id, 
-                                //     roundIndex:round.index, 
-                                //     stage:stage.name, 
-                                //     timestamp:moment(Date.now());
-                    
                             } else {
                                 punishments[otherPlayer.id] = punished - 1;
-
-                                // game.append("log",{
-                                //     verb:"removePunishment", 
-                                //     playerId:player._id, 
-                                //     targetPlayerId:otherPlayer._id, 
-                                //     roundIndex:round.index, 
-                                //     stage:stage.name, 
-                                //     timestamp:moment(Date.now())});
                             }
                             player.round.set("punished", punishments);
                         };
@@ -151,25 +142,9 @@ export function Outcome() {
                                 return;
                             }
                             rewards[otherPlayer.id] = added + 1;
-
-                            // game.append("log",{
-                            //     verb:"addReward", 
-                            //     playerId:player._id, 
-                            //     targetPlayerId:otherPlayer._id, 
-                            //     roundIndex:round.index, 
-                            //     stage:stage.name, 
-                            //     timestamp:moment(TimeSync.serverTime(null, 1000))});
                             
                             } else {
                             rewards[otherPlayer.id] = added - 1;
-
-                            // game.append("log",{
-                            //     verb:"removeReward", 
-                            //     playerId:player._id, 
-                            //     targetPlayerId:otherPlayer._id, 
-                            //     roundIndex:round.index, 
-                            //     stage:stage.name, 
-                            //     timestamp:moment(TimeSync.serverTime(null, 1000))});
                             }
 
                             player.round.set("rewarded", rewards);
@@ -193,6 +168,94 @@ export function Outcome() {
                             const punishmentActive = (currentRound + 1) % punishmentFrequency;
 
                             if (punishmentFrequency > 0 && punishmentActive === 0) {
+                                if (added > 0) {
+                                    reward(false);
+                                } else {
+                                    punish(true);
+                                }
+                            } else {
+                                alert("This action can not be done in this round.");
+                            }
+                            
+                        };
+
+                        return (
+                            <div
+                            key={player.id}
+                            className="flex justify-center items-center"
+                            >
+                            <div dir="ltr" className="w-[6.5rem]">
+                                <AvatarDeduction
+                                animal={otherPlayer.get("avatar")}
+                                submitted={otherPlayer.stage.get("submit")}
+                                contributed={otherPlayer.round.get("contribution")}
+                                disabled={player.stage.get("submit")}
+                                punishmentExists={punishmentExists}
+                                deducted={punished * punishmentMagnitude}
+                                rewardExists={rewardExists}
+                                added={added * rewardMagnitude}
+                                onDeduct={deduct}
+                                onAdd={add}
+                                />
+                            </div>
+                            </div>
+                        );
+                    })}
+
+                    {showNetworkInfo && connection.map((otherPlayer, i) => {
+                        const punished = punishments[otherPlayer.id] || 0;
+                        const added = rewards[otherPlayer.id] || 0;
+
+                        const punish = (increase) => {
+                            if (increase) {
+                                if (totalCost + punishmentCost > cumulativePayoff) {
+                                    alert( "You don't have enough coins to make this deduction!");
+                                    return;
+                                }
+
+                                punishments[otherPlayer.id] = punished + 1;
+                    
+                            } else {
+                                punishments[otherPlayer.id] = punished - 1;
+                            }
+                            player.round.set("punished", punishments);
+                        };
+
+
+                        const reward = (increase) => {
+                            if (increase) {
+                            if (totalCost + rewardCost > cumulativePayoff) {
+                                alert("You don't have enough coins to make this reward!");
+
+                                return;
+                            }
+                            rewards[otherPlayer.id] = added + 1;
+                            
+                            } else {
+                            rewards[otherPlayer.id] = added - 1;
+                            }
+
+                            player.round.set("rewarded", rewards);
+                        };
+
+                        const add = () => {
+                            const rewardActive = (currentRound + 1) % rewardFrequency;
+
+                            if (rewardFrequency > 0 && rewardActive === 0 && !connectionRewardDisabled) {
+                                if (punished > 0) {
+                                    punish(false);
+                                } else {
+                                    reward(true);
+                                }
+                            } else {
+                                alert("This action can not be done in this round.");
+                            }
+                        };
+
+                        const deduct = () => {
+                            const punishmentActive = (currentRound + 1) % punishmentFrequency;
+
+                            if (punishmentFrequency > 0 && punishmentActive === 0 && !connectionPunishDisabled) {
                                 if (added > 0) {
                                     reward(false);
                                 } else {
