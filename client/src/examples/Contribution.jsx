@@ -22,8 +22,12 @@ export function Contribution() {
 
     const endowment = game.get("treatment").endowment;
     const multiplier = game.get("treatment").multiplier;
+    const showNetworkInfo = game.get("treatment").networkInfoDisabled;
+    const network = game.get("treatment").networkMatrix;
+    const avatarId = player.get("avatarId");
     const contribution = player.round.get("contribution") || 0;
     const otherPlayers = players.filter((p) => p?.id !== player?.id);
+    const connection = otherPlayers.filter((p) => network[avatarId][p.get("avatarId")] == 1);
 
     function handleOnClick(amount) {
         player.round.set("contribution", contribution + amount);
@@ -66,7 +70,21 @@ export function Contribution() {
 
                 <div className="h-full grid grid-rows-1 col-start-9 col-end-13">
                     <PlayerGrid>
-                    {otherPlayers.map((p, i) => (
+                    {!showNetworkInfo && otherPlayers.map((p, i) => (
+                        <div
+                            key={i}
+                            className="flex justify-center items-center"
+                        >
+                            <div dir="ltr" className="w-16">
+                            <Avatar
+                                animal={p.get("avatar")}
+                                submitted={p.stage.get("submit")}
+                            />
+                            </div>
+                        </div>
+                    ))}
+
+                    {showNetworkInfo && connection.map((p, i) => (
                         <div
                             key={i}
                             className="flex justify-center items-center"
